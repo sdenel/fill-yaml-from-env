@@ -28,4 +28,8 @@ export PATH="~/bin/fill-from-env:$PATH"
 ```
 
 # Usage with Kubernetes
-(TODO)
+This tools allows to easily add env variables to Kubernetes YAML templates. Example:
+```bash
+export DATA_DIR=/postgres
+fill-from-env postgres-deployment.yaml | kubectl create -f -
+```
