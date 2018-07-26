@@ -1,8 +1,12 @@
+[![Build Status](https://travis-ci.com/sdenel/fill-from-env.svg?branch=master)](https://travis-ci.com/sdenel/fill-from-env)
+
 A small Python tool to replace variables inside a file with environment variables.
+
+![Example](screenshot.png)
 
 # Installation
 
-Exemple of usage:
+Clone the repository:
 ```bash
 mkdir -P ~/bin
 cd ~/bin
