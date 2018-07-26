@@ -1,6 +1,9 @@
 [![Build Status](https://travis-ci.com/sdenel/fill-from-env.svg?branch=master)](https://travis-ci.com/sdenel/fill-from-env)
 
+Tested against Python 2.7, 3.5, 3.6
+
 A small Python tool that substitutes environment variables inside a given file, then outputs the result in stdout.
+
 
 ```bash
 $ cat somefile.yaml
