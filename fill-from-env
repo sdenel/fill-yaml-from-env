@@ -34,7 +34,7 @@ if __name__ == '__main__':
     output = input
     for v in required_variables:
         output = output.replace('${' + v + '}', env_variables[v])
-        
+
     sys.stdout.write(output)
 
     try:
