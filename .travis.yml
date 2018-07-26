@@ -9,4 +9,4 @@ script:
   - pycodestyle --first fill-from-env
   - cp fill-from-env fill-from-env.py
   - python -m doctest -v fill-from-env.py
-  - [ "`SOMEVAR="world"; echo "Hello ${SOMEVAR}" | ./fill-from-env`" = "Hello world" ]
+  - ./tests.sh
