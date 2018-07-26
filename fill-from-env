@@ -8,26 +8,29 @@ def get_env_variables():
 
 
 def get_input():
-    if len(sys.argv)==1 or sys.argv[1] == '-':
+    if len(sys.argv) == 1 or sys.argv[1] == '-':
         return "\n".join(sys.stdin.readlines())
     with open(sys.argv[1], 'r') as f:
         return f.read()
 
 
-def get_required_variables(str):
+def get_required_variables(input_str):
     """
     >>> get_required_variables('${ONE} $TWO ${THREE} FOUR ${FIVE}')
     ['ONE', 'THREE', 'FIVE']
     """
-    return [x[:x.find('}')] for x in str.split('${')[1:]]
+    return [x[:x.find('}')] for x in input_str.split('${')[1:]]
+
 
 if __name__ == '__main__':
     input = get_input()
     env_variables = get_env_variables()
     required_variables = get_required_variables(input)
-    missing_variables = [x for x in required_variables if x not in env_variables.keys()]
+    missing_variables = \
+        [x for x in required_variables if x not in env_variables.keys()]
     assert len(missing_variables) == 0, \
-        str(missing_variables) + ' are required but not found in environment variables.'
+        str(missing_variables) + \
+        ' are required but not found in environment variables.'
     output = input
     for v in required_variables:
         output = output.replace('${' + v + '}', env_variables[v])
