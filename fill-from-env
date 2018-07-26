@@ -36,3 +36,4 @@ if __name__ == '__main__':
         output = output.replace('${' + v + '}', env_variables[v])
     sys.stdout.write(output)
     sys.stdout.flush()
+    sys.stdout.close()
