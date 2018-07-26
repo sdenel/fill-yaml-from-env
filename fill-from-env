@@ -34,6 +34,12 @@ if __name__ == '__main__':
     output = input
     for v in required_variables:
         output = output.replace('${' + v + '}', env_variables[v])
+        
     sys.stdout.write(output)
-    sys.stdout.flush()
-    sys.stdout.close()
+
+    try:
+        sys.stdout.flush()
+        sys.stdout.close()
+    except IOError as e:
+        # Fails silently
+        pass
