@@ -1,0 +1,12 @@
+language: python
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+install:
+  - pip install pycodestyle
+script:
+  - pycodestyle --first fill-from-env
+  - cp fill-from-env fill-from-env.py # doctest requires the .py extension
+  - python -m doctest -v fill-from-env.py
+  - [ "`SOMEVAR="world"; echo "Hello ${SOMEVAR}" | ./fill-from-env`" = "Hello world" ]
