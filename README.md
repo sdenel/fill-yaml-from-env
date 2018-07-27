@@ -13,7 +13,6 @@ The output is written in stdout.
 export NAMESPACE="prod"
 fill-yaml-from-env tests/example-input.yml > tests/example-input-parsed.yml
 ``` 
-gives:
 ![Screenshot](screenshot.png)
 
 # Installation
