@@ -1,0 +1,96 @@
+#!/usr/bin/env python
+import itertools
+import os
+import sys
+
+
+def get_env_variables():
+    return os.environ
+
+
+def get_input():
+    if len(sys.argv) == 1 or sys.argv[1] == '-':
+        return "\n".join(sys.stdin.readlines())
+    with open(sys.argv[1], 'r') as f:
+        return f.read()
+
+
+def get_required_variables(input_str):
+    """
+    >>> get_required_variables('{{ONE}} TWO {{THREE}} {{>FOUR}} {{FIVE}}')
+    ['ONE', 'THREE', 'FIVE']
+    """
+    vars_raw = [x[:x.find('}}')] for x in input_str.split('{{')[1:]]
+    return [x for x in vars_raw if not x.startswith(">")]
+
+
+def get_file_content(f):
+    with open(f, 'r') as f:
+        file_content = f.read()
+    return file_content.rstrip("\n")
+
+
+def build_leading_spaces(line):
+    """
+    >>> build_leading_spaces("  a")
+    '    '
+    """
+    n_leading_spaces = sum(1 for _ in itertools.takewhile(str.isspace, line))
+    leading_spaces = (n_leading_spaces + 2) * ' '
+    return leading_spaces
+
+
+def replace_files(input_str):
+    start_key = '{{>'
+    stop_key = '}}'
+    while True:
+        pos_start = input_str.find(start_key)
+        if pos_start == -1:
+            break
+        pos_stop = input_str.find(stop_key, pos_start)
+        filename = input_str[pos_start + len(start_key):pos_stop]
+        pos_previous_line = input_str[:pos_start].rfind('\n') + 1
+        line_beginning = input_str[pos_previous_line:pos_start]
+
+        file_content = get_file_content(filename)
+        file_n_lines = file_content.count("\n")
+        if file_n_lines <= 1:
+            content = file_content
+        else:
+            leading_spaces = build_leading_spaces(line_beginning)
+            content = "|\n" + leading_spaces + \
+                      file_content.replace("\n", "\n" + leading_spaces)
+
+        input_str = input_str[:pos_start] + content + \
+            input_str[pos_stop + len(stop_key):]
+
+    return input_str
+
+
+if __name__ == '__main__':
+
+    input = get_input()
+
+    input = input.replace("\t", "  ")
+
+    env_variables = get_env_variables()
+    required_variables = get_required_variables(input)
+    missing_variables = \
+        [x for x in required_variables if x not in env_variables.keys()]
+    assert len(missing_variables) == 0, \
+        str(missing_variables) + \
+        ' are required but not found in environment variables.'
+    output = input
+    for v in required_variables:
+        output = output.replace('{{' + v + '}}', env_variables[v])
+
+    output = replace_files(output)
+
+    sys.stdout.write(output)
+
+    try:
+        sys.stdout.flush()
+        sys.stdout.close()
+    except IOError as e:
+        # Fails silently
+        pass

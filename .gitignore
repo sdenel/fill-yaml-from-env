@@ -1,2 +1,4 @@
 *.pyc
 .idea/
+fill-yaml-from-env.py
+tests/example-input-parsed.yml

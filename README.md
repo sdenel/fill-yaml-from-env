@@ -2,12 +2,16 @@
 
 Tested against Python 2.7, 3.5, 3.6
 
-A small Python tool that substitutes environment variables inside a given file, then outputs the result in stdout.
+A small Python tool that parses YAML file with:
+* **{{ENV_VARIABLES_PROVIDED_THAT_WAY}}**
+* **{{>FILES_TO_INCLUDE_AS_STRING_PROVIDED_THIS_WAY}}**
 
+The output is written in stdout.
 
+Examples:
 ```bash
 $ cat somefile.yaml
-directory: ${INSTALL_DIR}
+directory: {{INSTALL_DIR}}
 $ export INSTALL_DIR="/somewhere"
 $ fill-from-env somefile.yaml
 directory: /somewhere
@@ -22,17 +26,17 @@ Clone the repository:
 ```bash
 mkdir -P ~/bin
 cd ~/bin
-git clone https://github.com/sdenel/fill-from-env
+git clone https://github.com/sdenel/fill-yaml-from-env
 ```
 
 Then for example in your ~/.bashrc or ~/.zshrc file:
 ```bash
-export PATH="~/bin/fill-from-env:$PATH"
+export PATH="~/bin/fill-yaml-from-env:$PATH"
 ```
 
 # Usage with Kubernetes
 This tools allows to easily add env variables to Kubernetes YAML templates. Example:
 ```bash
 export DATA_DIR=/postgres
-fill-from-env postgres-deployment.yaml | kubectl create -f -
+fill-yaml-from-env postgres-deployment.yaml | kubectl create -f -
 ```
