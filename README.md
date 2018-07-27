@@ -2,23 +2,19 @@
 
 Tested against Python 2.7, 3.5, 3.6
 
-A small Python tool that parses YAML file with:
-* **{{ENV_VARIABLES_PROVIDED_THAT_WAY}}**
-* **{{>FILES_TO_INCLUDE_AS_STRING_PROVIDED_THIS_WAY}}**
+A small Python tool that parses YAML files to include environment variables and configuration files:
+* **{{ENV_VARIABLES_PROVIDED_THIS_WAY}}**
+* **{{>FILES_TO_INCLUDE_AS_STRING_PROVIDED_THAT_WAY}}**
 
 The output is written in stdout.
 
-Examples:
+# Examples
 ```bash
-$ cat somefile.yaml
-directory: {{INSTALL_DIR}}
-$ export INSTALL_DIR="/somewhere"
-$ fill-from-env somefile.yaml
-directory: /somewhere
-$ # Also works with stdin as an input
-$ cat somefile.yaml | fill-from-env
-directory: /somewhere
-```
+export NAMESPACE="prod"
+fill-yaml-from-env tests/example-input.yml > tests/example-input-parsed.yml
+``` 
+gives:
+![Screenshot](screenshot.png)
 
 # Installation
 
