@@ -54,7 +54,7 @@ def replace_files(input_str):
 
         file_content = get_file_content(filename)
         file_n_lines = file_content.count("\n")
-        if file_n_lines <= 1:
+        if file_n_lines == 0:
             content = file_content
         else:
             leading_spaces = build_leading_spaces(line_beginning)
